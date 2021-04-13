@@ -1,34 +1,20 @@
 package ru.netology.manager;
 
-import lombok.Getter;
-import lombok.Setter;
 import ru.netology.domain.MovieItem;
 
-@Getter
-@Setter
-
-public class MovieManager {
-
-    private MovieItem[] items = new MovieItem[0];
+public class AfishaManager {
+    private AfishaRepository repository;
     private int amount;
 
-    public MovieManager(int amount) {
+    public AfishaManager(AfishaRepository repository, int amount) {
+        this.repository = repository;
         this.amount = amount;
     }
 
-    public void add(MovieItem item) {
-        int length = items.length + 1;
-        MovieItem[] tmp = new MovieItem[length];
-        for (int i = 0; i < items.length; i++) {
-            tmp[i] = items[i];
-        }
-        int lastIndex = tmp.length - 1;
-        tmp[lastIndex] = item;
-        items = tmp;
-    }
-
     public MovieItem[] getAll() {
+        MovieItem[] items = repository.findAll();
         MovieItem[] result = new MovieItem[items.length];
+        // int max = 3;
         if (items.length > amount) {
             MovieItem[] result1 = new MovieItem[amount];
             for (int i = 0; i < amount; i++) {
@@ -44,5 +30,4 @@ public class MovieManager {
         }
         return result;
     }
-
 }
